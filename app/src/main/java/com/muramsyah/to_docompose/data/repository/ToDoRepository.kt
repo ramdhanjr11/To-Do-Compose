@@ -2,8 +2,10 @@ package com.muramsyah.to_docompose.data.repository
 
 import com.muramsyah.to_docompose.data.TodoDao
 import com.muramsyah.to_docompose.data.models.ToDoTask
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
+@ViewModelScoped
 class ToDoRepository @Inject constructor(private val todoDao: TodoDao) {
 
     fun getAllTasks() = todoDao.getAllTasks()
