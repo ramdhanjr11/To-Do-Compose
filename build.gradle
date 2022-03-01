@@ -4,6 +4,7 @@ buildscript {
         roomVersion = "2.4.1"
         dataStoreVersion = "1.0.0"
         daggerHiltVersion = "2.38.1"
+        nav_version = "2.4.1"
     }
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
