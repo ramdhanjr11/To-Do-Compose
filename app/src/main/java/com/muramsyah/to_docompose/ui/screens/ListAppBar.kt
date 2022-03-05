@@ -23,6 +23,10 @@ import com.muramsyah.to_docompose.R
 import com.muramsyah.to_docompose.components.PriorityItem
 import com.muramsyah.to_docompose.data.models.Priority
 import com.muramsyah.to_docompose.ui.theme.*
+import com.muramsyah.to_docompose.ui.theme.LARGE_PADDING
+import com.muramsyah.to_docompose.ui.theme.Typography
+import com.muramsyah.to_docompose.ui.theme.topAppBackgroundColor
+import com.muramsyah.to_docompose.ui.theme.topAppBarContentColor
 
 @Composable
 fun ListAppBar() {
