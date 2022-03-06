@@ -84,7 +84,7 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
-    var traillingIconState by remember { mutableStateOf(TraillingCloseState.READY_TO_DELETE) }
+    var traillingIconState by remember { mutableStateOf(TraillingCloseState.READY_TO_CLOSE) }
 
     Surface(
         modifier = Modifier
