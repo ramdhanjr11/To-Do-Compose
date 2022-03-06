@@ -1,7 +1,7 @@
 buildscript {
     ext {
         compose_version = '1.0.1'
-        roomVersion = "2.4.1"
+        roomVersion = "2.4.2"
         dataStoreVersion = "1.0.0"
         daggerHiltVersion = "2.38.1"
         nav_version = "2.4.1"

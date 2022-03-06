@@ -7,9 +7,12 @@ import androidx.navigation.navArgument
 import com.muramsyah.to_docompose.ui.screens.ListScreen
 import com.muramsyah.to_docompose.util.Constants.LIST_ARGUMENT_KEY
 import com.muramsyah.to_docompose.util.Constants.LIST_SCREEN
+import com.muramsyah.to_docompose.util.SearchAppBarState
+import com.muramsyah.to_docompose.viewmodels.SharedViewModel
 
 fun NavGraphBuilder.listComposable(
-    navigateToTaskScreen: (taskId: Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+    sharedViewModel: SharedViewModel
 ) {
     composable(
         route = LIST_SCREEN,
@@ -17,6 +20,9 @@ fun NavGraphBuilder.listComposable(
             type = NavType.StringType
         })
     ) {
-        ListScreen(navigateToTaskScreen)
+        ListScreen(
+            navigateToTaskScreen = navigateToTaskScreen,
+            sharedViewModel = sharedViewModel
+        )
     }
 }

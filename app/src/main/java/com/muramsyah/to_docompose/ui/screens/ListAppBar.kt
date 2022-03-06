@@ -1,6 +1,5 @@
 package com.muramsyah.to_docompose.ui.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,24 +22,40 @@ import com.muramsyah.to_docompose.R
 import com.muramsyah.to_docompose.components.PriorityItem
 import com.muramsyah.to_docompose.data.models.Priority
 import com.muramsyah.to_docompose.ui.theme.*
-import com.muramsyah.to_docompose.ui.theme.LARGE_PADDING
-import com.muramsyah.to_docompose.ui.theme.Typography
-import com.muramsyah.to_docompose.ui.theme.topAppBackgroundColor
-import com.muramsyah.to_docompose.ui.theme.topAppBarContentColor
+import com.muramsyah.to_docompose.util.SearchAppBarState
+import com.muramsyah.to_docompose.util.TraillingCloseState
+import com.muramsyah.to_docompose.viewmodels.SharedViewModel
 
 @Composable
-fun ListAppBar() {
-    DefaultListAppBar(
-        onSearchClicked = { },
-        onSortClicked = { },
-        onDeleteClicked = { }
-    )
-//    SearchAppBar(
-//        text = "",
-//        onTextChange = {},
-//        onCloseClicked = {},
-//        onSearchClicked = {}
-//    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState: String
+) {
+    when (searchAppBarState) {
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
+                },
+                onSortClicked = { },
+                onDeleteClicked = { }
+            )
+        }
+        else -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = { newText ->
+                    sharedViewModel.searchTextState.value = newText
+                },
+                onCloseClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
+                onSearchClicked = { }
+            )
+        }
+    }
 }
 
 @Composable
@@ -69,6 +84,8 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
+    var traillingIconState by remember { mutableStateOf(TraillingCloseState.READY_TO_DELETE) }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -95,14 +112,30 @@ fun SearchAppBar(
                 )
             },
             trailingIcon = {
-                Icon(
-                    modifier = Modifier
-                        .alpha(ContentAlpha.disabled)
-                        .clickable { onCloseClicked() },
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = "Close",
-                    tint = MaterialTheme.colors.topAppBarContentColor
-                )
+                IconButton(onClick = {
+                    when (traillingIconState) {
+                        TraillingCloseState.READY_TO_DELETE -> {
+                            onTextChange("")
+                            traillingIconState = TraillingCloseState.READY_TO_CLOSE
+                        }
+                        TraillingCloseState.READY_TO_CLOSE -> {
+                            if (text.isNotEmpty()) {
+                                onTextChange("")
+                            } else {
+                                onCloseClicked()
+                                traillingIconState = TraillingCloseState.READY_TO_DELETE
+                            }
+                        }
+                    }
+                }) {
+                    Icon(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.disabled),
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "Close",
+                        tint = MaterialTheme.colors.topAppBarContentColor
+                    )
+                }
             },
             placeholder = {
                 Text(
