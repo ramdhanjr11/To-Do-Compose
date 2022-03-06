@@ -1,5 +1,6 @@
 package com.muramsyah.to_docompose.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -12,6 +13,7 @@ import com.muramsyah.to_docompose.util.Constants.LIST_SCREEN
 import com.muramsyah.to_docompose.util.SearchAppBarState
 import com.muramsyah.to_docompose.viewmodels.SharedViewModel
 
+@ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(
     navController: NavHostController,
